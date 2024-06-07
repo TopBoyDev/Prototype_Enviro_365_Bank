@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviro 365 Bank - Withdrawal -By Tyrese Makhubele</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+            margin-bottom: 150px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], input[type="number"], select, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .balance-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="form-container">
+        <h2 style="color: #007bff;">Enviro 365 Bank - Withdrawal</h2>
+        <p>By Tyrese Makhubele</p>
+        <br/>
+
+        <div class="form-group">
+            <label for="product">Select Product:</label>
+            <select id="product" v-model="product">
+                <option value="" disabled>Select a product</option>
+                <option value="Product A">Product A</option>
+                <option value="Product B">Product B</option>
+                <option value="Product C">Product C</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="amount">Withdrawal Amount:</label>
+            <input type="number" id="amount" v-model="amount">
+        </div>
+        <div class="form-group">
+            <label for="account-number">Account Number:</label>
+            <input type="text" id="account-number" v-model="accountNumber">
+        </div>
+        <div class="form-group">
+            <label for="bank-name">Bank Name:</label>
+            <input type="text" id="bank-name" v-model="bankName">
+        </div>
+        <div class="form-group">
+            <label for="routing-number">Routing Number:</label>
+            <input type="text" id="routing-number" v-model="routingNumber">
+        </div>
+        <div class="form-group">
+            <label for="bank-statement">Upload Bank Statement:</label>
+            <input type="file" id="bank-statement" @change="handleFileUpload">
+        </div>
+        <button @click="submitWithdrawal">Submit Withdrawal</button>
+        <div v-if="balanceInfo" class="balance-info">
+            <p>Balance before Withdrawal: ${{ balanceInfo.balanceBefore }}</p>
+            <p>Amount Withdrawn: ${{ balanceInfo.amountWithdrawn }}</p>
+            <p>Closing Balance: ${{ balanceInfo.closingBalance }}</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    product: '',
+                    amount: '',
+                    accountNumber: '',
+                    bankName: '',
+                    routingNumber: '',
+                    bankStatement: null,
+                    balanceInfo: null
+                };
+            },
+            methods: {
+                handleFileUpload(event) {
+                    this.bankStatement = event.target.files[0];
+                },
+                submitWithdrawal() {
+                    this.balanceInfo = {
+                        balanceBefore: 1000,
+                        amountWithdrawn: this.amount,
+                        closingBalance: 1000 - this.amount,
+                    };
+                    window.scrollTo({ bottom: 0, behavior: 'instant' });
+
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
